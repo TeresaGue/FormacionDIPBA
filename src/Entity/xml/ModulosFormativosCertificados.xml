@@ -1,0 +1,36 @@
+<?php
+$namespaces = array(
+    '/path/to/files1' => 'src\Entity',
+    '/path/to/files2' => 'OtherProject\Entities'
+);
+$driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver($namespaces);
+$driver->setGlobalBasename('global'); // global.orm.xml
+
+?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+
+    <entity name="ModulosFormativosCertificados">
+        <id name="id" type="integer" column="modulosfc_id">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="Nivel" type="integer" nullable="false" />
+        <field name="Descripcion" type="string" nullable="false" />
+        <field name="Codigo" type="string" nullable="false" unique="true" />
+        <field name="Horas" type="decimal" nullable="false" />
+        <field name="Contenido" type="string" nullable="false" />
+        <many-to-many field="itinerariosformativos" target-entity="ItinerariosFormativos">
+            <join-table name="modulos_itinerarios">
+                <join-columns>
+                    <join-column name="modulosfc_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="itinerarios_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

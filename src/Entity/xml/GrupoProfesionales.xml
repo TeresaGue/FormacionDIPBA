@@ -1,0 +1,28 @@
+<?php
+$namespaces = array(
+    '/path/to/files1' => 'src\Entity',
+    '/path/to/files2' => 'OtherProject\Entities'
+);
+$driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver($namespaces);
+$driver->setGlobalBasename('global'); // global.orm.xml
+
+?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping>
+<!-- Entidades Grupos Profesionales -->
+    <entity name="GruposProfesionales" table="GruposProfesionales" schema="FormacionDIPBA" repository-class="src\Repository">
+        <id name="id" type="integer" column="GruposProfesionales_id">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="Denominacion" type="string" nullable="false" />
+            <many-to-many field="ocupaciones" target-entity="Ocupaciones">
+            <join-table name="grupos_ocupaciones">
+                <join-columns>
+                    <join-column name="GruposProfesionales_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="Ocupaciones_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

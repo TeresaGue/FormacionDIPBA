@@ -1,0 +1,34 @@
+<?php
+$namespaces = array(
+    '/path/to/files1' => 'src\Entity',
+    '/path/to/files2' => 'OtherProject\Entities'
+);
+$driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver($namespaces);
+$driver->setGlobalBasename('global'); // global.orm.xml
+
+?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping>
+        <entity name="GestionPlanes" table="GestionPlanes" schema="FormacionDIPBA" repository-class="src\Repository">
+            <id name="id" type="integer" column="GestionPlanes_id">
+                <generator strategy="AUTO" />
+            </id>
+            <field name="Codigo" type="string" nullable="false" unique="true"/>
+            <field name="Nombre" type="string" nullable="false" />
+            <field name="Descripcion" type="string" nullable="false" />
+            <field name="Requisitos" type="string" nullable="false" />
+            <field name="YearInicio" type="date" nullable="false" />
+            <field name="YearFin" type="date" nullable="false" />
+            <field name="Localidad" type="string" nullable="false" />
+            <field name="Destinatario" type="string" nullable="false" />
+        <many-to-many field="becas" target-entity="becas">
+            <join-table name="becas_planes">
+                <join-columns>
+                    <join-column name="Becas_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="GestionPlanes_id" referenced-column-name="id" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,28 @@
+<?php
+$namespaces = array(
+    '/path/to/files1' => 'src\Entity',
+    '/path/to/files2' => 'OtherProject\Entities'
+);
+$driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver($namespaces);
+$driver->setGlobalBasename('global'); // global.orm.xml
+
+?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+<!-- Entidades Formaciones -->
+     <entity name="Formaciones" table="Formaciones" schema="FormacionDIPBA" repository-class="src\Repository">
+        <id name="id" type="integer" column="Formaciones_id">
+            <generator strategy="AUTO" />
+        </id>
+        <field name="Denominacion" type="string" nullable="false" />
+        <field name="Codigo" type="string" nullable="false" />
+            <one-to-many field="Denominacion" target-entity="AreasProfesionales" mapped-by="Denominacion" />
+        </entity>
+        <!--<entity name="Formaciones">
+            <many-to-one field="Denominacion" target-entity="Formaciones" inversed-by="Denominacion">
+                <join-column name="id" referenced-column-name="Formaciones" />
+            </many-to-one>
+        </entity>-->
+</doctrine-mapping>
