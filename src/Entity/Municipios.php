@@ -18,9 +18,6 @@ class Municipios
     #[ORM\Column(length: 255)]
     private ?string $Nombre = null;
 
-    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Provincias::class)]
-    private Collection $provincias;
-
     #[ORM\OneToMany(mappedBy: 'municipios', targetEntity: Direcciones::class)]
     private Collection $municipios;
 
@@ -43,36 +40,6 @@ class Municipios
     public function setNombre(string $Nombre): self
     {
         $this->Nombre = $Nombre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Provincias>
-     */
-    public function getProvincias(): Collection
-    {
-        return $this->provincias;
-    }
-
-    public function addProvincia(Provincias $provincia): self
-    {
-        if (!$this->provincias->contains($provincia)) {
-            $this->provincias->add($provincia);
-            $provincia->setRelation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProvincia(Provincias $provincia): self
-    {
-        if ($this->provincias->removeElement($provincia)) {
-            // set the owning side to null (unless already changed)
-            if ($provincia->getRelation() === $this) {
-                $provincia->setRelation(null);
-            }
-        }
 
         return $this;
     }

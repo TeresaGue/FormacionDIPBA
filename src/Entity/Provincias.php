@@ -16,8 +16,9 @@ class Provincias
     #[ORM\Column(length: 255)]
     private ?string $Nombre = null;
 
-    #[ORM\ManyToOne(inversedBy: 'provincias')]
-    private ?Municipios $relation = null;
+    #[ORM\ManyToOne(inversedBy: 'comunidades')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Comunidades $comunidades = null;
 
     public function getId(): ?int
     {
@@ -36,15 +37,16 @@ class Provincias
         return $this;
     }
 
-    public function getRelation(): ?Municipios
+    public function getComunidades(): ?Comunidades
     {
-        return $this->relation;
+        return $this->comunidades;
     }
 
-    public function setRelation(?Municipios $relation): self
+    public function setComunidades(?Comunidades $comunidades): self
     {
-        $this->relation = $relation;
+        $this->comunidades = $comunidades;
 
         return $this;
     }
+
 }
