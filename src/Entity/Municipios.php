@@ -21,9 +21,13 @@ class Municipios
     #[ORM\OneToMany(mappedBy: 'relation', targetEntity: Provincias::class)]
     private Collection $provincias;
 
+    #[ORM\OneToMany(mappedBy: 'municipios', targetEntity: Direcciones::class)]
+    private Collection $municipios;
+
     public function __construct()
     {
         $this->provincias = new ArrayCollection();
+        $this->municipios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class Municipios
             // set the owning side to null (unless already changed)
             if ($provincia->getRelation() === $this) {
                 $provincia->setRelation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Direcciones>
+     */
+    public function getMunicipios(): Collection
+    {
+        return $this->municipios;
+    }
+
+    public function addMunicipio(Direcciones $municipio): self
+    {
+        if (!$this->municipios->contains($municipio)) {
+            $this->municipios->add($municipio);
+            $municipio->setMunicipios($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMunicipio(Direcciones $municipio): self
+    {
+        if ($this->municipios->removeElement($municipio)) {
+            // set the owning side to null (unless already changed)
+            if ($municipio->getMunicipios() === $this) {
+                $municipio->setMunicipios(null);
             }
         }
 

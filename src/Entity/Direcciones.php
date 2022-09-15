@@ -39,6 +39,9 @@ class Direcciones
     #[ORM\ManyToMany(targetEntity: Personas::class)]
     private Collection $relation;
 
+    #[ORM\ManyToOne(inversedBy: 'municipios')]
+    private ?Municipios $municipios = null;
+
     public function __construct()
     {
         $this->relation = new ArrayCollection();
@@ -153,6 +156,18 @@ class Direcciones
     public function removeRelation(Personas $relation): self
     {
         $this->relation->removeElement($relation);
+
+        return $this;
+    }
+
+    public function getMunicipios(): ?Municipios
+    {
+        return $this->municipios;
+    }
+
+    public function setMunicipios(?Municipios $municipios): self
+    {
+        $this->municipios = $municipios;
 
         return $this;
     }
