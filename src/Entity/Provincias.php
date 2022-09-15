@@ -16,6 +16,9 @@ class Provincias
     #[ORM\Column(length: 255)]
     private ?string $Nombre = null;
 
+    #[ORM\ManyToOne(inversedBy: 'provincias')]
+    private ?Municipios $relation = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Provincias
     public function setNombre(string $Nombre): self
     {
         $this->Nombre = $Nombre;
+
+        return $this;
+    }
+
+    public function getRelation(): ?Municipios
+    {
+        return $this->relation;
+    }
+
+    public function setRelation(?Municipios $relation): self
+    {
+        $this->relation = $relation;
 
         return $this;
     }

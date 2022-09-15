@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DireccionesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DireccionesRepository::class)]
@@ -33,6 +35,14 @@ class Direcciones
 
     #[ORM\Column]
     private ?int $Codigo_postal = null;
+
+    #[ORM\ManyToMany(targetEntity: Personas::class)]
+    private Collection $relation;
+
+    public function __construct()
+    {
+        $this->relation = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +129,30 @@ class Direcciones
     public function setCodigoPostal(int $Codigo_postal): self
     {
         $this->Codigo_postal = $Codigo_postal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Personas>
+     */
+    public function getRelation(): Collection
+    {
+        return $this->relation;
+    }
+
+    public function addRelation(Personas $relation): self
+    {
+        if (!$this->relation->contains($relation)) {
+            $this->relation->add($relation);
+        }
+
+        return $this;
+    }
+
+    public function removeRelation(Personas $relation): self
+    {
+        $this->relation->removeElement($relation);
 
         return $this;
     }
