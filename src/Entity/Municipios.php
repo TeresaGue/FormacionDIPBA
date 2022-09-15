@@ -21,6 +21,10 @@ class Municipios
     #[ORM\OneToMany(mappedBy: 'municipios', targetEntity: Direcciones::class)]
     private Collection $municipios;
 
+    #[ORM\ManyToOne(inversedBy: 'provincias')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Provincias $provincias = null;
+
     public function __construct()
     {
         $this->provincias = new ArrayCollection();
@@ -70,6 +74,18 @@ class Municipios
                 $municipio->setMunicipios(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProvincias(): ?Provincias
+    {
+        return $this->provincias;
+    }
+
+    public function setProvincias(?Provincias $provincias): self
+    {
+        $this->provincias = $provincias;
 
         return $this;
     }
