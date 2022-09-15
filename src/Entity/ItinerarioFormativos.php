@@ -20,7 +20,7 @@ class ItinerarioFormativos
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?CriteriosSeleccion $criterios = null;
+    private ?CriteriosSeleccion $criteriosseleccion = null;
 
     #[ORM\ManyToOne(inversedBy: 'relation2')]
     #[ORM\JoinColumn(nullable: false)]

@@ -9,16 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ModulosPropiosRepository::class)]
-class ModulosPropios
+class ModulosPropios extends Formaciones
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $Denominacion = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $Objetivos = null;
 
@@ -29,13 +21,14 @@ class ModulosPropios
     private ?string $Contenido = null;
 
     #[ORM\Column]
-    private ?int $Con_practicas = null;
+    private ?bool $Con_practicas = null;
 
     #[ORM\Column]
     private ?int $Horas_formacion = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?RequisitosAlumnos $relation = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?RequisitosAlumnos $requisitosalumnos = null;
 
     #[ORM\OneToMany(mappedBy: 'modulosPropios', targetEntity: ItinerarioFormativos::class)]
     private Collection $relation2;
@@ -43,23 +36,6 @@ class ModulosPropios
     public function __construct()
     {
         $this->relation2 = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getDenominacion(): ?string
-    {
-        return $this->Denominacion;
-    }
-
-    public function setDenominacion(string $Denominacion): self
-    {
-        $this->Denominacion = $Denominacion;
-
-        return $this;
     }
 
     public function getObjetivos(): ?string
@@ -98,12 +74,12 @@ class ModulosPropios
         return $this;
     }
 
-    public function getConPracticas(): ?int
+    public function getConPracticas(): ?bool
     {
         return $this->Con_practicas;
     }
 
-    public function setConPracticas(int $Con_practicas): self
+    public function setConPracticas(bool $Con_practicas): self
     {
         $this->Con_practicas = $Con_practicas;
 
