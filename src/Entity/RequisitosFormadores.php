@@ -24,7 +24,7 @@ class RequisitosFormadores
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ModulosPropios $relation = null;
+    private ?ModulosPropios $modulospropios = null;
 
     public function getId(): ?int
     {

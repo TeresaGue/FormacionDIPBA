@@ -13,7 +13,7 @@ class Formaciones
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 8)]
     private ?string $Codigo = null;
 
     #[ORM\Column(length: 255)]

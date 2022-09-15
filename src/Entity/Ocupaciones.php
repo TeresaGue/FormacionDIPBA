@@ -16,7 +16,7 @@ class Ocupaciones
     private ?int $id = null;
 
     #[ORM\Column(length: 8)]
-    private ?string $Cno = null;
+    private ?int $Cno = null;
 
     #[ORM\Column(length: 255)]
     private ?string $Denominacion = null;
@@ -38,12 +38,12 @@ class Ocupaciones
         return $this->id;
     }
 
-    public function getCno(): ?string
+    public function getCno(): ?int
     {
         return $this->Cno;
     }
 
-    public function setCno(string $Cno): self
+    public function setCno(int $Cno): self
     {
         $this->Cno = $Cno;
 
