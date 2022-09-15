@@ -33,6 +33,10 @@ class ItinerarioFormativos
     #[ORM\JoinColumn(nullable: false)]
     private ?CertificadosProfesionalidad $certificadosProfesionalidad = null;
 
+    #[ORM\ManyToOne(inversedBy: 'itinerarioformativos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Personas $personas = null;
+
    public function __construct()
    {
     $this->relation= new ArrayCollection();
@@ -87,6 +91,18 @@ class ItinerarioFormativos
     public function setCertificadosProfesionalidad(?CertificadosProfesionalidad $certificadosProfesionalidad): self
     {
         $this->certificadosProfesionalidad = $certificadosProfesionalidad;
+
+        return $this;
+    }
+
+    public function getPersonas(): ?Personas
+    {
+        return $this->personas;
+    }
+
+    public function setPersonas(?Personas $personas): self
+    {
+        $this->personas = $personas;
 
         return $this;
     }

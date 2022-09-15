@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonasRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,6 +42,14 @@ class Personas
 
     #[ORM\Column]
     private ?bool $Disponibilidad = null;
+
+    #[ORM\OneToMany(mappedBy: 'personas', targetEntity: ItinerarioFormativos::class)]
+    private Collection $itinerarioformativos;
+
+    public function __construct()
+    {
+        $this->itinerarioformativos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -150,6 +160,36 @@ class Personas
     public function setDisponibilidad(bool $Disponibilidad): self
     {
         $this->Disponibilidad = $Disponibilidad;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItinerarioFormativos>
+     */
+    public function getItinerarioformativos(): Collection
+    {
+        return $this->itinerarioformativos;
+    }
+
+    public function addItinerarioformativo(ItinerarioFormativos $itinerarioformativo): self
+    {
+        if (!$this->itinerarioformativos->contains($itinerarioformativo)) {
+            $this->itinerarioformativos->add($itinerarioformativo);
+            $itinerarioformativo->setPersonas($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItinerarioformativo(ItinerarioFormativos $itinerarioformativo): self
+    {
+        if ($this->itinerarioformativos->removeElement($itinerarioformativo)) {
+            // set the owning side to null (unless already changed)
+            if ($itinerarioformativo->getPersonas() === $this) {
+                $itinerarioformativo->setPersonas(null);
+            }
+        }
 
         return $this;
     }
