@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Municipio;
+use App\Entity\Municipios;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,14 +14,14 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Municipio[]    findAll()
  * @method Municipio[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MunicipioRepository extends ServiceEntityRepository
+class MunicipiosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Municipio::class);
+        parent::__construct($registry, Municipios::class);
     }
 
-    public function add(Municipio $entity, bool $flush = false): void
+    public function add(Municipios $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class MunicipioRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Municipio $entity, bool $flush = false): void
+    public function remove(Municipios $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
